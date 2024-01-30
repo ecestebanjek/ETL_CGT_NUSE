@@ -1,0 +1,12 @@
+kafka-python
+pandas
+numpy
+SQLAlchemy
+pandas
+numpy
+pyodbc
+SQLAlchemy
+kafka-python
+confluent-kafka
+requests
+regex
