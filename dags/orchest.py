@@ -172,14 +172,15 @@ def task_produce_inc():
     
     try:
         # Ejecutar consulta en la base de datos
-        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_INCIDENTES;")
+        # cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_INCIDENTES;")
+        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.View_INTERFAZ_MOVILIDAD_INCIDENTES;")
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         def corregir_noombres(x):
             if x=="NUMERO_INCIDENTE":
                 r = 'INCIDENTNUMBER'
-            elif x=="DESCRIPCIÓN_DIRECCIÓN":
-                r = 'DESCIRPCION_DIRECCION'
+            # elif x=="DESCRIPCIÓN_DIRECCIÓN":
+            #     r = 'DESCIRPCION_DIRECCION'
             elif x=="COORDENADAX":
                 r = 'LONGITUDE'
             elif x=="COORDENADAY":
@@ -194,8 +195,8 @@ def task_produce_inc():
                 r = 'DESCR_TIPO_INCIDENTE_INICIAL'
             elif x=="DESCR_CIRCUNSTANCIAMOD_INICIAL":
                 r = 'DESC_CIRCUNSTANCIAMOD_INICIAL'
-            elif x=="DESCRIPCIÓN_CIRCUNSTANCIAMOD":
-                r = 'DESCRIPCION_CIRCUNSTANCIAMOD'
+            # elif x=="DESCRIPCIÓN_CIRCUNSTANCIAMOD":
+            #     r = 'DESCRIPCION_CIRCUNSTANCIAMOD'
             else:
                 r=x
             return r
@@ -247,7 +248,7 @@ def task_produce_units():
         {"optional": True, "type": "int64","field": "TIEMPO_ESCENA"},# 11-TIEMPO_ESCENA
         {"optional": True, "type": "int64","field": "PROPONIENDO"},# 12-PROPONIENDO
         {"optional": True, "type": "int64","field": "MOVILIZANDO"},# 13-MOVILIZANDO
-        {"optional": True, "type": "int64","field": "ATENDIENDO"},# 14-ATENDIENDO
+        {"optional": True, "type": "int64","field": "ATENDIENDO"},# 14-ATENDIENDOFROM (Corregir)
         ],
         "name": "nuse_units_schema"
     }
@@ -261,14 +262,17 @@ def task_produce_units():
     try:
         # Ejecutar consulta en la base de datos
         # cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_INCIDENTES;")
-        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_UNIDADES;")
+        # cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_UNIDADES;")
+        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.View_INTERFAZ_MOVILIDAD_UNIDADES;")
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         def corregir_noombres(x):
             if x=="NUMERO_INCIDENTE":
                 r = 'INCIDENTNUMBER'
-            elif x=="ULTIMA_UBICACIÓN":
-                r = 'ULTIMA_UBICACION'
+            # elif x=="ULTIMA_UBICACIÓN":
+            #     r = 'ULTIMA_UBICACION'
+            elif x=="ATENDIENDOFROM":
+                r = 'ATENDIENDO'
             else:
                 r=x
             return r
@@ -312,9 +316,19 @@ def task_produce_clones():
     try:
         # Ejecutar consulta en la base de datos
         # cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_INCIDENTES;")
-        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_CLONES;")
+        # cursor.execute("SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_CLONES;")
+        cursor.execute("SELECT * FROM datafeeds.sch_movilidad.View_INTERFAZ_MOVILIDAD_CLONES;")
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
+        def corregir_noombres(x):
+            if x=="FECHA_PADRE":
+                r = 'FECHA_INCPADRE'
+            elif x=="FECHA_HIJO":
+                r = 'FECHA_INCHIJO'
+            else:
+                r=x
+            return r
+        columns = list(map(corregir_noombres, columns))
         string_serializer = StringSerializer('utf_8')
         for row in rows:
             val = [serialize_special_types(value) for value in row]

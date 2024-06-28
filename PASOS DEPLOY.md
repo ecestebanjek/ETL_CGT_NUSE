@@ -17,4 +17,4 @@ Espera de 3-5 minutos para que todo cargue, y verificar:
 ## Verificación de funcionamiento
 http://localhost:9021 --> Verificación de broker, topics, conectores e interfaz
 
-http://localhost:8080 --> Verificación de ETL de extracción y producción funcional
+http://localhost:8080 --> Verificación de ETL de extracción y producción funcionalldconfig
