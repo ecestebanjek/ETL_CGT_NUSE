@@ -35,7 +35,7 @@ def sql_server_connect():
     server = '10.218.1.118\master,1433' # to specify an alternate port
     database = 'datafeeds' 
     username = 'anova' 
-    password = 'M0v1l1d4d2023'
+    password = 'M0v1l1d4d2024'
     to_engine: str = 'DRIVER=ODBC Driver 17 for SQL Server;SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password
     cnxn = pyodbc.connect(to_engine)
     # query = "SELECT * FROM datafeeds.sch_movilidad.INTERFAZ_MOVILIDAD_INCIDENTES;"
